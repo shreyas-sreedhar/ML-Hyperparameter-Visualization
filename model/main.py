@@ -24,7 +24,7 @@ This app allows you to experiment with various regression algorithms and hyperpa
          
 Upload your dataset from the sidebar to get started or use one of the dummy datasets available.
 
-### CAPSTONE PROJECT FOR INFO6105 - SHREYAS S SREEDHAR 
+ CAPSTONE PROJECT FOR INFO6105 - SHREYAS S SREEDHAR 
 """)
 
 #---------------------------------#
