@@ -80,8 +80,8 @@ def build_model(df, regression_model):
     if not numerical_columns:
         st.error("Insufficient numerical values to perform regression.")
         return
-    
-    selected_Y_column = st.selectbox('Select Y Column', numerical_columns)
+    default_index = len(numerical_columns) - 1
+    selected_Y_column = st.selectbox('Select Y Column', numerical_columns, index=default_index)
     X = df[numerical_columns]
     Y = df[selected_Y_column] # Selecting the last numerical column as Y
     st.markdown(f'A model is being built to predict the following **{Y.name}** variable using {regression_model}.')
