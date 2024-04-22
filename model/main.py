@@ -22,7 +22,9 @@ st.write("""
 
 This app allows you to experiment with various regression algorithms and hyperparameters to optimize your machine learning model's performance, visually.
          
-Upload your dataset from the sidebar to get started or use one of the dummy datasets available. 
+Upload your dataset from the sidebar to get started or use one of the dummy datasets available.
+
+### CAPSTONE PROJECT FOR INFO6105 - SHREYAS S SREEDHAR 
 """)
 
 #---------------------------------#
