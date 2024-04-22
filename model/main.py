@@ -36,7 +36,7 @@ if uploaded_file is not None:
     st.sidebar.write(file_details)
 
 st.sidebar.markdown("""
-[Example CSV input file]()
+[Example CSV input file](https://raw.githubusercontent.com/shreyas-sreedhar/ML-Hyperparameter-Visualization/main/data/data_1.csv)
 """)
 #add later
 
