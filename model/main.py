@@ -43,6 +43,8 @@ st.sidebar.markdown("""
 #---------------------------------#
 # Sidebar - Specify parameter settings
 st.sidebar.header('Select Model and Set Parameters')
+# Sidebar - Specify X and Y columns
+
 
 regression_model = st.sidebar.selectbox('Choose Regression Model', ['Linear Regression', 'Ridge Regression', 'Random Forest Regression'])
 
@@ -73,12 +75,22 @@ def filedownload(df):
 
 # Update the function to include 3D plotting
 def build_model(df, regression_model):
-    X = df.iloc[:,:-1] # Using all columns except for the last column as X
-    Y = df.iloc[:,-1] # Selecting the last column as Y
-
+    # Check if dataset contains non-numeric values
+    numerical_columns = df.select_dtypes(include=np.number).columns.tolist()
+    if not numerical_columns:
+        st.error("Insufficient numerical values to perform regression.")
+        return
+    
+    selected_Y_column = st.selectbox('Select Y Column', numerical_columns)
+    X = df[numerical_columns]
+    Y = df[selected_Y_column] # Selecting the last numerical column as Y
     st.markdown(f'A model is being built to predict the following **{Y.name}** variable using {regression_model}.')
+    if Y.isnull().any():
+        st.error("Target variable contains NaN values. Please handle missing values before proceeding.")
+        return
 
-    # Data splitting
+        
+    # Split data into training and testing sets
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=split_size)
 
     if regression_model == 'Linear Regression':
@@ -109,7 +121,7 @@ def build_model(df, regression_model):
     st.info(mean_squared_error(Y_test, Y_pred_test))
 
     st.write("The best parameters are %s with a score of %0.2f"
-             % (grid.best_params_, grid.best_score_))
+                % (grid.best_params_, grid.best_score_))
 
     st.subheader('Model Parameters')
     st.write(grid.get_params())
@@ -140,10 +152,10 @@ def build_model(df, regression_model):
             )
             fig = go.Figure(data=[go.Surface(z=z, y=y, x=x)], layout=layout)
             fig.update_layout(title='Hyperparameter Tuning',
-                              autosize=False,
-                              width=800,
-                              height=800,
-                              margin=dict(l=65, r=50, b=65, t=90))
+                                autosize=False,
+                                width=800,
+                                height=800,
+                                margin=dict(l=65, r=50, b=65, t=90))
             st.plotly_chart(fig)
         else:
             st.write("Only one hyperparameter to visualize for this model.")
@@ -171,8 +183,6 @@ def build_model(df, regression_model):
                 st.plotly_chart(fig)
     else:
         st.write("No hyperparameters to visualize for this model.")
-
-
 #---------------------------------#
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
