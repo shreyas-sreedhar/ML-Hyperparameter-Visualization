@@ -30,7 +30,7 @@ Upload your dataset from the sidebar to get started or use one of the dummy data
 st.sidebar.header('Upload Your Dataset')
 
 # Sidebar - Specify parameter settings
-uploaded_file = st.sidebar.file_uploader("Upload your CSV file", type=["csv"])
+uploaded_file = st.sidebar.file_uploader("Upload your CSV file from the sidebar" , type=["csv"])
 if uploaded_file is not None:
     file_details = {"FileName":uploaded_file.name,"FileSize":uploaded_file.size}
     st.sidebar.write(file_details)
